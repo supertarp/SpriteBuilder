@@ -1,0 +1,45 @@
+//
+// Prefix header for all source files of the 'ccBuilder' target in the 'ccBuilder' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+
+#ifdef DEBUG
+#   define DLog(fmt, ...) NSLog((@"%s, line %d: " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#   define WARN(cnd, fmt, ...) if (!cnd) { NSLog((@"WARNING: %s, line %d: " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__); }
+#	define SBLogSelf() NSLog(@"%@: %@ (%@)", NSStringFromSelector(_cmd), self, NSStringFromClass([self class]))
+#else
+#   define DLog(...)
+#   define WARN(...)
+#	define SBLogSelf() do{} while(0)
+#endif
+
+// Yosemite version check
+#define YOSEMITE_UI (rint(NSAppKitVersionNumber) > 1265)
+
+/** Suppress a compiler warning regarding the performSelector: method. */
+#define SUPPRESS_LEAK_WARNING(code) \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")     \
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \
+
+#define SUPPRESS_DEPRECATED_WARNING(code) \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")		\
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \
+
+#define SUPPRESS_UNDECLARED_SELECTOR(code) \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Wundeclared-selector\"")			\
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \
+
+#define SUPPRESS_DEPRECATED(code) \
+_Pragma("clang diagnostic push")                                        \
+_Pragma("clang diagnostic ignored \"-Wdeprecated-declarations\"")		\
+code;                                                                   \
+_Pragma("clang diagnostic pop")                                         \
